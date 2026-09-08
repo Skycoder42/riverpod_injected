@@ -2,7 +2,8 @@ import 'package:code_builder/code_builder.dart';
 import 'package:meta/meta.dart';
 
 @internal
-sealed class Types {
+// ignore: public_member_api_docs false positive
+sealed class Types() {
   static const _riverpodDiUrl =
       'package:riverpod_injected/riverpod_injected.dart';
 

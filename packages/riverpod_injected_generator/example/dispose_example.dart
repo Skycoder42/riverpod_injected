@@ -16,7 +16,7 @@ final disposed = <Object>[];
 /// The common case: an instance method carries the annotation. It is torn off
 /// as `ref.onDispose(instance.close)`, so it must have no required parameters.
 @riverDi
-class Connection {
+class Connection() {
   @disposeMethod
   void close() => disposed.add(this);
 }
@@ -25,11 +25,7 @@ class Connection {
 /// its first positional parameter. Any further parameter has to be optional and
 /// keeps its default, as the generated closure only passes the instance.
 @riverDi
-class Session {
-  final Connection connection;
-
-  new(this.connection);
-
+class Session(final Connection connection) {
   @disposeMethod
   static void end(Session session, [int code = 42]) {
     disposed
@@ -48,15 +44,13 @@ void _closeCache(Cache cache) => disposed.add(cache);
 
 /// `onDispose` also accepts a static method, of this or of any other class.
 @RiverDi(onDispose: Registry.unregister)
-class Registry {
+class Registry() {
   static void unregister(Registry registry) => disposed.add(registry);
 }
 
 /// Async providers register the awaited instance, not the future.
 @riverDiAsync
-class Worker {
-  const new _();
-
+class const Worker._() {
   @providerConstructor
   static Future<Worker> spawn() async => const Worker._();
 
@@ -67,7 +61,7 @@ class Worker {
 /// A `keepAlive` provider survives until its container goes away, and is
 /// disposed together with it.
 @riverDiSingleton
-class Pool {
+class Pool() {
   @disposeMethod
   void drain() => disposed.add(this);
 }

@@ -18,17 +18,15 @@ class const TestReferring2.create(
 });
 
 @riverDi
-class Basic;
+class Basic();
 
 @riverDi
-class BasicDefault {
-  new(Basic basic);
-}
+class BasicDefault(Basic basic);
 
 @riverDi
-class BasicNamed {
+class BasicNamed.named(Basic basic) {
   @providerConstructor
-  new named(Basic basic);
+  this;
 }
 
 @riverDi
@@ -36,12 +34,10 @@ class Factory {
   factory() => _Factory();
 }
 
-class _Factory implements Factory;
+class _Factory() implements Factory;
 
 @riverDi
-class FromMethod {
-  const new _();
-
+class const FromMethod._() {
   @providerConstructor
   static FromMethod createInstance() => const ._();
 }
@@ -55,17 +51,13 @@ class const Competing.primary() {
 }
 
 @riverDiAsync
-class FromFuture {
-  const new _();
-
+class const FromFuture._() {
   @providerConstructor
   static Future<FromFuture> createInstance() async => const ._();
 }
 
 @riverDiAsync
-class FromFutureOr {
-  const new _();
-
+class const FromFutureOr._() {
   @providerConstructor
   static FutureOr<FromFutureOr> createInstance() => const ._();
 }
@@ -74,7 +66,7 @@ class FromFutureOr {
 int externalFunc(Ref ref) => 42;
 
 @riverpod
-class ExternalNotifier extends _$ExternalNotifier {
+class ExternalNotifier() extends _$ExternalNotifier {
   @override
   int build() => 42;
 }
@@ -83,7 +75,7 @@ class ExternalNotifier extends _$ExternalNotifier {
 Future<int> externalAsync(Ref ref) async => 42;
 
 @riverpod
-class AsyncExternalNotifier extends _$AsyncExternalNotifier {
+class AsyncExternalNotifier() extends _$AsyncExternalNotifier {
   @override
   Future<int> build() async => 42;
 }
@@ -100,13 +92,13 @@ class FromExternal(
 );
 
 @riverDi
-class Dispose1 {
+class Dispose1() {
   @disposeMethod
   void dispose() {}
 }
 
 @riverDi
-class Dispose2 {
+class Dispose2() {
   @disposeMethod
   static void dispose(Dispose2 _) {}
 
@@ -114,9 +106,9 @@ class Dispose2 {
 }
 
 @RiverDi(onDispose: Dispose2.disposeOther)
-class Dispose3;
+class Dispose3();
 
 void _dispose4(Dispose4 _) {}
 
 @RiverDi(onDispose: _dispose4)
-class Dispose4;
+class Dispose4();

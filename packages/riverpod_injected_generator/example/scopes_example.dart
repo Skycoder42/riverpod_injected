@@ -7,19 +7,19 @@ part 'scopes_example.g.dart';
 bool existingScoped(Ref _) => true;
 
 @Riverpod(dependencies: [existingScoped])
-class ScopedNotifier extends _$ScopedNotifier {
+class ScopedNotifier() extends _$ScopedNotifier {
   @override
   int build() => 0;
 }
 
 @RiverDi(dependencies: [])
-class ScopedType;
+class ScopedType();
 
 @RiverDi(dependencies: [ScopedType])
-class ScopedDependency;
+class ScopedDependency();
 
 @RiverDi(dependencies: [ScopedType, existingScoped])
-class DoubleScoped;
+class DoubleScoped();
 
 @RiverDi(dependencies: [DoubleScoped, ScopedNotifier])
-class CombinedScoped;
+class CombinedScoped();

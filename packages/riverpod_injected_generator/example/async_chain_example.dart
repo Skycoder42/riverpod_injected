@@ -17,11 +17,7 @@ class const Config() {
 /// Connecting takes time, so the instance is built by a [providerConstructor]
 /// returning a [Future].
 @riverDiAsync
-class Database {
-  final Config config;
-
-  const new _(this.config);
-
+class const Database._(final Config config) {
   @providerConstructor
   static Future<Database> connect(Config config) async => Database._(config);
 }

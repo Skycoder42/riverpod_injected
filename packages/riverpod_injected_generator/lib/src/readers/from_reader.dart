@@ -19,7 +19,8 @@ extension FromReaderX on FormalParameterElement {
 }
 
 @internal
-sealed class ProviderRef;
+// ignore: public_member_api_docs false positive
+sealed class ProviderRef();
 @internal
 // ignore: public_member_api_docs false positive
 class TypeProviderRef(final DartType type) extends ProviderRef;

@@ -8,7 +8,7 @@ part 'interfaces_example.g.dart';
 
 /// The abstraction consumers depend on. It carries no annotation of its own and
 /// therefore has no provider.
-abstract interface class Greeter {
+abstract interface class Greeter() {
   String greet(String name);
 }
 

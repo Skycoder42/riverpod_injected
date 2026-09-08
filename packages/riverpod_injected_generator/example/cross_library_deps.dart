@@ -12,11 +12,7 @@ class const Logger() {
 }
 
 @riverDiAsync
-class RemoteClock {
-  final Logger logger;
-
-  const new _(this.logger);
-
+class const RemoteClock._(final Logger logger) {
   @providerConstructor
   static Future<RemoteClock> connect(Logger logger) async =>
       RemoteClock._(logger);
