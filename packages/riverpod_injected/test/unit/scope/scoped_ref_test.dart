@@ -2,6 +2,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:riverpod_injected/src/scope/scoped_ref.dart';
 import 'package:test/test.dart';
 
+import '../helpers.dart';
+
 part 'scoped_ref_test.g.dart';
 
 @riverpod
@@ -156,12 +158,4 @@ void main() {
       expect(sut.read(nowProvider), isNot(initial));
     });
   });
-}
-
-extension on ProviderContainer {
-  void Function() lock(ProviderListenable<dynamic> provider) {
-    final sub = listen(provider, (_, _) {});
-    addTearDown(sub.close);
-    return sub.close;
-  }
 }

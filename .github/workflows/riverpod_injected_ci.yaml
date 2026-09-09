@@ -17,8 +17,8 @@ jobs:
     uses: Skycoder42/dart_test_tools/.github/workflows/dart.yml@main
     with:
       workingDirectory: packages/riverpod_injected
-      buildRunner: false
-      unitTestPaths: ""
+      buildRunner: true
+      unitTestPaths: -P unit
 
   cd:
     name: CD

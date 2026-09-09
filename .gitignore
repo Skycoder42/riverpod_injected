@@ -30,3 +30,4 @@ doc/api/
 
 # Generated files
 *.g.dart
+*.mocks.dart

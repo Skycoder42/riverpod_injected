@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.0] - 2026-09-08
 ### Added
 - Added `riverpodScope` method to create managed scopes for CLI based applications.
+- Added `RiverpodCommandRunner` helper class to run commands within a managed Riverpod scope.
 
 ## [1.1.0] - 2026-09-03
 ### Changed

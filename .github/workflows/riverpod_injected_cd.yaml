@@ -18,4 +18,4 @@ jobs:
       tagPrefix: riverpod_injected-v
       version: ${{ inputs.version }}
       workingDirectory: packages/riverpod_injected
-      buildRunner: false
+      buildRunner: true
