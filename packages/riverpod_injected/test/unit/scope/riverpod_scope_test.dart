@@ -37,7 +37,7 @@ void main() {
       expect(container.exists(keptProvider), isFalse);
 
       await riverpodScope(parent: container, (ref) {
-        expect(ref.keep(keptProvider), 11);
+        expect(ref.watch(keptProvider), 11);
         expect(container.exists(keptProvider), isTrue);
       });
 

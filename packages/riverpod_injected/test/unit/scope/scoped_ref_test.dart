@@ -70,10 +70,10 @@ void main() {
       expect(sub.read(), const AsyncData<int>(1));
     });
 
-    group('watch', () {
+    group('stream', () {
       test('streams provider events', () {
         expect(
-          sut.watch(streamProvider).take(3),
+          sut.stream(streamProvider).take(3),
           emitsInOrder([
             const AsyncData<int>(0),
             const AsyncData<int>(1),
@@ -84,7 +84,7 @@ void main() {
 
       test('fires immediately if set', () {
         expect(
-          sut.watch(streamProvider, fireImmediately: true).take(3),
+          sut.stream(streamProvider, fireImmediately: true).take(3),
           emitsInOrder([
             const AsyncLoading<int>(),
             const AsyncData<int>(0),
@@ -95,7 +95,7 @@ void main() {
 
       test('can pause and resume', () async {
         final sub = sut
-            .watch(streamProvider)
+            .stream(streamProvider)
             .listen(expectAsync1((event) {}, count: 2));
         addTearDown(sub.cancel);
 
@@ -114,7 +114,7 @@ void main() {
 
       test('forwards errors', () {
         expect(
-          sut.watch(errorProvider, fireImmediately: true).take(1),
+          sut.stream(errorProvider, fireImmediately: true).take(1),
           emitsError(
             isA<Exception>().having(
               (m) => m.toString(),
@@ -126,8 +126,8 @@ void main() {
       });
     });
 
-    test('keep reads provider and keeps it alive until disposed', () async {
-      expect(sut.keep(basicProvider), 42);
+    test('watch reads provider and keeps it alive until disposed', () async {
+      expect(sut.watch(basicProvider), 42);
 
       await pumpEventQueue();
 

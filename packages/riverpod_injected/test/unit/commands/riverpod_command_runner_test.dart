@@ -67,7 +67,7 @@ void main() {
     test('scopes provider to the command', () async {
       when(command.mock.run()).thenAnswer((i) {
         expect(command.ref, isNotNull);
-        expect(command.ref.keep(simpleProvider), 42);
+        expect(command.ref.watch(simpleProvider), 42);
         expect(container.exists(simpleProvider), isTrue);
         return 42;
       });

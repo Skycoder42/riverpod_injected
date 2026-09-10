@@ -10,9 +10,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 /// A [Ref]-like object that is scoped to a [riverpodScope] call.
 ///
-/// Similar to [Ref], it allows [read]ing, [listen]ing, and [watch]ing
-/// providers. It also provides [keep], [refresh], and [invalidate] methods,
-/// with [keep] being a special variant of [read] that keeps auto-disposable
+/// Similar to [Ref], it allows [read]ing, [watch]ing, and [stream]ing
+/// providers. It also provides [listen], [refresh], and [invalidate] methods,
+/// with [watch] being a special variant of [read] that keeps auto-disposable
 /// providers alive until the surrounding [riverpodScope] call has finished.
 /// This is useful for cases where an async provider does some work without
 /// anything else specifically watching it.
@@ -37,7 +37,7 @@ class ScopedRef(final ProviderContainer container) {
   /// Using `ref.read(provider.future)` will **not** prevent the provider from
   /// being disposed, and will throw an error if the provider is disposed before
   /// it finishes. If you want to keep an auto-disposable provider alive until
-  /// the surrounding scope callback has finished, use [keep] instead.
+  /// the surrounding scope callback has finished, use [watch] instead.
   ///
   /// See [Ref.read] for more details.
   T read<T>(ProviderListenable<T> provider) => container.read(provider);
@@ -59,6 +59,28 @@ class ScopedRef(final ProviderContainer container) {
     onError: onError,
   );
 
+  /// Obtains the state of a provider and causes the provider to stay alive
+  /// until the surrounding scope callback has finished.
+  ///
+  /// **Important:** Unlike [Ref.watch], which usually causes the consumer to
+  /// rebuild when the state of the watched provider changes, [watch] only keeps
+  /// the provider alive *without* triggering a rebuild, as a rebuild does not
+  /// conceptually exists in an imperative callback.
+  ///
+  /// This means it works just like [Ref.read], but with one minor difference:
+  /// If the provider is an auto disposable provider, it will not be disposed
+  /// until the [ScopedRef] itself is disposed. This means it will stay alive
+  /// until the surrounding scope callback has finished.
+  ///
+  /// See [Ref.read] and [Ref.watch] for more details.
+  T watch<T>(ProviderListenable<T> provider) {
+    final subscription = _keepAliveSubs.putIfAbsent(
+      provider,
+      () => container.listen(provider, (_, _) {}),
+    ) as ProviderSubscription<T>;
+    return subscription.read();
+  }
+
   /// Listens to a [provider] and returns a stream of its state.
   ///
   /// The stream will emit the current state of the [provider] (if
@@ -67,8 +89,8 @@ class ScopedRef(final ProviderContainer container) {
   /// subscription, which may notify the provider if no other listeners are
   /// active. You can also use [weak] to make the subscription weak.
   ///
-  /// See [Ref.watch] for more details.
-  Stream<T> watch<T>(
+  /// See [Ref.listen] for more details.
+  Stream<T> stream<T>(
     ProviderListenable<T> provider, {
     bool fireImmediately = false,
     bool weak = false,
@@ -94,23 +116,6 @@ class ScopedRef(final ProviderContainer container) {
       onResume: () => providerSub.resume(),
     );
     return controller.stream;
-  }
-
-  /// Reads a provider without listening to it.
-  ///
-  /// Works just like [Ref.read], but with one minor difference: If the provider
-  /// is a auto disposable provider, it will not be disposed until the
-  /// [ScopedRef] itself is disposed. This means it will stay alive until the
-  /// surrounding scope callback has finished. Internally, [Ref.listen] is used
-  /// to achieve this.
-  ///
-  /// See [Ref.read] and [Ref.watch] for more details.
-  T keep<T>(ProviderListenable<T> provider) {
-    final subscription = _keepAliveSubs.putIfAbsent(
-      provider,
-      () => container.listen(provider, (_, _) {}),
-    ) as ProviderSubscription<T>;
-    return subscription.read();
   }
 
   /// Forces a [provider] to re-evaluate its state immediately, and return the
