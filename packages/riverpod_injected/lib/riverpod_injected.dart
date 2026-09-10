@@ -6,5 +6,8 @@ export 'src/annotations/from.dart';
 export 'src/annotations/provider_constructor.dart';
 export 'src/annotations/river_di.dart';
 
+export 'src/commands/riverpod_command.dart';
+export 'src/commands/riverpod_command_runner.dart';
+
 export 'src/scope/riverpod_scope.dart';
 export 'src/scope/scoped_ref.dart';

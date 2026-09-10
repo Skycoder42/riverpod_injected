@@ -1,6 +1,6 @@
 name: riverpod_injected
 description: The annotations for a small code generator for simple dependency injection via riverpod.
-version: 1.2.0
+version: 1.2.0+1
 repository: https://github.com/Skycoder42/riverpod_injected
 
 environment:
