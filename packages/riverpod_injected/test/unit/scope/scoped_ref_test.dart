@@ -142,6 +142,7 @@ void main() {
     test('refresh refreshes the provider', () async {
       final initial = sut.read(nowProvider);
 
+      await Future<void>.delayed(const .new(milliseconds: 1));
       await pumpEventQueue();
 
       expect(sut.read(nowProvider), initial);
@@ -151,6 +152,7 @@ void main() {
     test('invalidate invalidates the provider', () async {
       final initial = sut.read(nowProvider);
 
+      await Future<void>.delayed(const .new(milliseconds: 1));
       await pumpEventQueue();
 
       expect(sut.read(nowProvider), initial);
