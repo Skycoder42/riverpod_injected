@@ -9,6 +9,8 @@ jobs:
   ci:
     name: Updates
     uses: Skycoder42/dart_test_tools/.github/workflows/auto-update.yml@main
+    with:
+      flutterCompat: true
     permissions:
       contents: write
       pull-requests: write

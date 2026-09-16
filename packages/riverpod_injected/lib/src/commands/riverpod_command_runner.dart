@@ -54,7 +54,7 @@ abstract base class RiverpodCommandRunner<TReturn>(
     return await riverpodScope(parent: _parent, overrides: overrides, (
       ref,
     ) async {
-      final commandInstances = commands.values
+      final commandInstances = _expandRecursive(commands)
           .whereType<RiverpodCommand<dynamic>>()
           .toSet();
       for (final command in commandInstances) {
@@ -63,5 +63,16 @@ abstract base class RiverpodCommandRunner<TReturn>(
 
       return await runProviderCommand(topLevelResults, ref);
     });
+  }
+
+  Iterable<Command<dynamic>> _expandRecursive(
+    Map<String, Command<dynamic>> commands,
+  ) sync* {
+    for (final command in commands.values) {
+      yield command;
+      for (final subcommand in command.subcommands.values) {
+        yield* _expandRecursive({subcommand.name: subcommand});
+      }
+    }
   }
 }

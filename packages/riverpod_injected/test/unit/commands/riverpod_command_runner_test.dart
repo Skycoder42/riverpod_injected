@@ -32,10 +32,27 @@ class TestCommand(final MockCommand mock)
   FutureOr<int?>? run() => mock.run();
 }
 
-final class TestRunner(TestCommand command, {super.parent})
-    extends RiverpodCommandRunner<int?> {
+class TestCommandGroup(Iterable<Command<int?>> subCommands)
+    extends Command<int?> {
+  this {
+    subCommands.forEach(addSubcommand);
+  }
+
+  @override
+  String get name => 'group';
+
+  @override
+  String get description => 'group description';
+}
+
+final class TestRunner(
+  TestCommand command,
+  TestCommand subCommand, {
+  super.parent,
+}) extends RiverpodCommandRunner<int?> {
   this : super('test', 'test description') {
     addCommand(command);
+    addCommand(TestCommandGroup([subCommand]));
   }
 
   @override
@@ -48,15 +65,18 @@ void main() {
   group('$RiverpodCommandRunner', () {
     late ProviderContainer container;
     late TestCommand command;
+    late TestCommand subCommand;
     late TestRunner sut;
 
     setUp(() {
       container = ProviderContainer.test();
       command = TestCommand(MockCommand());
+      subCommand = TestCommand(MockCommand());
 
       when(command.mock.name).thenReturn('test');
+      when(subCommand.mock.name).thenReturn('sub');
 
-      sut = TestRunner(command, parent: container);
+      sut = TestRunner(command, subCommand, parent: container);
     });
 
     test('is able to run a command', () async {
@@ -80,6 +100,18 @@ void main() {
       expect(container.exists(simpleProvider), isFalse);
 
       verify(command.mock.run()).called(1);
+    });
+
+    test('scopes provider to sub commands', () async {
+      when(subCommand.mock.run()).thenAnswer((i) {
+        expect(subCommand.ref, isNotNull);
+        return 42;
+      });
+
+      final result = await sut.run(['group', 'sub']);
+      expect(result, 42);
+
+      verify(subCommand.mock.run()).called(1);
     });
 
     test('applies overrides to scope', () async {
