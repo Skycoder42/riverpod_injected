@@ -56,9 +56,8 @@ final class TestRunner(
   }
 
   @override
-  List<Override> configureOverrides(ArgResults topLevelResults) => [
-    scopedProvider.overrideWithValue(11),
-  ];
+  ContainerConfiguration configureContainer(ArgResults topLevelResults) =>
+      .new(overrides: [scopedProvider.overrideWithValue(11)]);
 }
 
 void main() {
