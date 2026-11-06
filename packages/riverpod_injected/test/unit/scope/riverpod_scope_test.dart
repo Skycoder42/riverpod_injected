@@ -34,18 +34,18 @@ void main() {
     });
 
     test('disposes kept providers', () async {
-      expect(container.exists(keptProvider), isFalse);
+      expect(container.read(keptProvider.exists), isFalse);
 
       await riverpodScope(parent: container, (ref) {
         expect(ref.watch(keptProvider), 11);
-        expect(container.exists(keptProvider), isTrue);
+        expect(container.read(keptProvider.exists), isTrue);
       });
 
-      expect(container.exists(keptProvider), isFalse);
+      expect(container.read(keptProvider.exists), isFalse);
     });
 
     test('disposes scoped providers', () async {
-      expect(container.exists(scopedProvider), isFalse);
+      expect(container.read(scopedProvider.exists), isFalse);
 
       await riverpodScope(
         parent: container,
@@ -55,7 +55,7 @@ void main() {
         },
       );
 
-      expect(container.exists(scopedProvider), isFalse);
+      expect(container.read(scopedProvider.exists), isFalse);
     });
   });
 }

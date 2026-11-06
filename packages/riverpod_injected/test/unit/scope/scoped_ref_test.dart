@@ -32,10 +32,14 @@ void main() {
     });
 
     test('exists reports whether the provider exists', () {
+      // Still tested until the deprecated method is removed.
+      // ignore: deprecated_member_use_from_same_package
       expect(sut.exists(basicProvider), isFalse);
 
       container.lock(basicProvider);
 
+      // Still tested until the deprecated method is removed.
+      // ignore: deprecated_member_use_from_same_package
       expect(sut.exists(basicProvider), isTrue);
     });
 
@@ -44,7 +48,7 @@ void main() {
 
       await pumpEventQueue();
 
-      expect(container.exists(basicProvider), isFalse);
+      expect(container.read(basicProvider.exists), isFalse);
     });
 
     test('listen reads the provider and listens for changes', () async {
@@ -131,12 +135,12 @@ void main() {
 
       await pumpEventQueue();
 
-      expect(container.exists(basicProvider), isTrue);
+      expect(container.read(basicProvider.exists), isTrue);
 
       sut.dispose();
       await pumpEventQueue();
 
-      expect(container.exists(basicProvider), isFalse);
+      expect(container.read(basicProvider.exists), isFalse);
     });
 
     test('refresh refreshes the provider', () async {

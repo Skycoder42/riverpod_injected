@@ -87,16 +87,16 @@ void main() {
       when(command.mock.run()).thenAnswer((i) {
         expect(command.ref, isNotNull);
         expect(command.ref.watch(simpleProvider), 42);
-        expect(container.exists(simpleProvider), isTrue);
+        expect(container.read(simpleProvider.exists), isTrue);
         return 42;
       });
 
-      expect(container.exists(simpleProvider), isFalse);
+      expect(container.read(simpleProvider.exists), isFalse);
 
       final result = await sut.run(['test']);
       expect(result, 42);
 
-      expect(container.exists(simpleProvider), isFalse);
+      expect(container.read(simpleProvider.exists), isFalse);
 
       verify(command.mock.run()).called(1);
     });

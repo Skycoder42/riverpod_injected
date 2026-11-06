@@ -25,8 +25,10 @@ class ScopedRef(final ProviderContainer container) {
 
   /// Determines whether a [provider] is initialized or not.
   ///
-  /// See [Ref.exists] for more details.
-  bool exists(ProviderBase<Object?> provider) => container.exists(provider);
+  /// See [ProviderBase.exists] for more details.
+  @Deprecated('Use `ref.read/watch/listen(provider.exists)` instead')
+  bool exists(ProviderBase<Object?> provider) =>
+      container.read(provider.exists);
 
   /// Reads a [provider] without listening to it and returns the currently
   /// exposed value.
