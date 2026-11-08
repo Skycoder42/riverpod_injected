@@ -98,8 +98,8 @@ class RiverpodDiGenerator(final BuilderOptions options)
 
   Expression _buildAnnotation(RiverDiReader riverDi) =>
       Types.$Riverpod.newInstance([], {
-        if (riverDi.name case final name?) 'name': literalString(name),
         if (riverDi.keepAlive) 'keepAlive': literalTrue,
+        if (riverDi.name case final name?) 'name': literalString(name),
         if (riverDi.retry case final retry?) 'retry': retry.toReference(),
         if (riverDi.dependencies case final dependencies?)
           'dependencies': literalList(dependencies.map(_mapDependency)),
