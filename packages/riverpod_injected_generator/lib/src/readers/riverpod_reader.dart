@@ -18,7 +18,6 @@ extension RiverpodX on Element {
 }
 
 @internal
-// ignore: public_member_api_docs false positive
 class RiverpodReader(final ConstantReader _reader) {
   String? get name => _reader.peek('name')?.stringValue;
 }

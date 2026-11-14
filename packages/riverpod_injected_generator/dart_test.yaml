@@ -1,3 +1,5 @@
+test_on: vm
+
 presets:
   unit:
     paths:

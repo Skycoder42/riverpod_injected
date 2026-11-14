@@ -12,8 +12,13 @@ import 'riverpod_command.dart';
 
 /// A helper class to configure the scoped [ProviderContainer].
 class const ContainerConfiguration({
+  /// The list of [Override]s to apply to the scoped container.
   final List<Override> overrides = const [],
+
+  /// The list of [ProviderObserver]s to apply to the scoped container.
   final List<ProviderObserver>? observers,
+
+  /// The retry logic to apply to the scoped container.
   final Duration? Function(int, Object)? retry,
 }) {
   /// Default constructor

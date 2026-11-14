@@ -19,20 +19,15 @@ extension FromReaderX on FormalParameterElement {
 }
 
 @internal
-// ignore: public_member_api_docs false positive
 sealed class ProviderRef();
 @internal
-// ignore: public_member_api_docs false positive
 class TypeProviderRef(final DartType type) extends ProviderRef;
 @internal
-// ignore: public_member_api_docs false positive
 class FunctionProviderRef(final ExecutableElement element) extends ProviderRef;
 @internal
-// ignore: public_member_api_docs false positive
 class NamedProviderRef(final String name) extends ProviderRef;
 
 @internal
-// ignore: public_member_api_docs false positive
 class FromReader(final ConstantReader _reader) {
   bool get exists => !_reader.isNull;
 
