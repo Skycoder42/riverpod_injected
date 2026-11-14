@@ -16,7 +16,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 /// providers alive until the surrounding [riverpodScope] call has finished.
 /// This is useful for cases where an async provider does some work without
 /// anything else specifically watching it.
-class ScopedRef(final ProviderContainer container) {
+class ScopedRef(
+  /// The [ProviderContainer] that is used to access providers.
+  final ProviderContainer container,
+) {
   final _keepAliveSubs = <ProviderListenable<dynamic>, ProviderSubscription>{};
 
   /// @nodoc

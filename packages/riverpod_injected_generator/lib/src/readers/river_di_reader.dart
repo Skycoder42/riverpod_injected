@@ -20,7 +20,6 @@ extension RiverDiX on Element {
 }
 
 @internal
-// ignore: public_member_api_docs false positive
 class RiverDiReader(final ConstantReader _reader) {
   bool get async => _reader.read('async').boolValue;
 

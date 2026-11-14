@@ -39,7 +39,6 @@ class ResolvedProvider({
 }
 
 @internal
-// ignore: public_member_api_docs false positive
 class ProviderResolver(final BuilderOptions options) {
   late final riverpodOptions = BuildYamlOptions.fromMap(options.config);
 

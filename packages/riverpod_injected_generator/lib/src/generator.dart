@@ -16,7 +16,6 @@ import 'readers/river_di_reader.dart';
 import 'types.dart';
 
 @internal
-// ignore: public_member_api_docs false positive
 class RiverpodDiGenerator(final BuilderOptions options)
     extends GeneratorForAnnotation<RiverDi>
     with DartGeneratorMixin {
