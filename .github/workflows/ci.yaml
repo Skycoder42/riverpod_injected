@@ -34,6 +34,7 @@ jobs:
       workingDirectory: packages/riverpod_injected_generator
       buildRunner: true
       unitTestPaths: -P unit
+      minCoverage: 80
       integrationTestPaths: -P integration
 
   riverpod_injected_generator_cd:
