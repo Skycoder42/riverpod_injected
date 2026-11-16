@@ -1,12 +1,12 @@
 name: riverpod_injected_workspace
 
 environment:
-  sdk: ^3.13.0
+  sdk: ^3.14.0
 
 workspace:
   - packages/riverpod_injected
   - packages/riverpod_injected_generator
 
 dev_dependencies:
-  dart_test_tools: ^8.2.0
+  dart_test_tools: ^8.2.1
   riverpod_lint: ^3.2.0
